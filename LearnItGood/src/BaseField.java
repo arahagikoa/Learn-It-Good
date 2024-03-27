@@ -19,11 +19,6 @@ public class BaseField extends JPanel {
 		docTitle = new JLabel(Name);
 		docTitle.setText(Name);
 		
-		
-		
-	
-		
-        
 		panel.add(docTitle, BorderLayout.WEST);
 		panel.add(menu, BorderLayout.EAST);
 		// this.add(options)

@@ -17,15 +17,23 @@ public class BazaWiedzyFrame extends JPanel {
         this.setPreferredSize(new Dimension(500, 700));
         this.setBackground(Color.GRAY);
         
+        
+        // panel na instancje baz danych
         centPanel = new JPanel();
         centPanel.setLayout(new BoxLayout(centPanel, BoxLayout.Y_AXIS));
         centPanel.setBackground(Color.GRAY);
         centPanel.setSize(100, 200);
+        
+        
+        
         addBase = new JButton("Dodaj");
+        
         
         title = new JLabel("Istniejące bazy");
         Font titleFont = title.getFont();
         title.setFont(new Font(titleFont.getName(), Font.BOLD, 24));
+        
+        
         
         addBase.addActionListener(new ActionListener() {
         	BaseField field;
@@ -38,17 +46,9 @@ public class BazaWiedzyFrame extends JPanel {
             		centPanel.revalidate(); 
                     centPanel.repaint();
         		}
-        		
-        		
-                
-                
         	}
         });
-        
-        
-        
-        
-        
+
         topPanel = new JPanel(); 
         topPanel.setLayout(new BorderLayout());
         topPanel.setBackground(Color.WHITE);
