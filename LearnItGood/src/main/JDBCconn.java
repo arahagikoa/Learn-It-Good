@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class JDBCconn {
 	public static void main (String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-		// fast change to check git hub
+		
 		try {
 			Connection connection = DriverManager.getConnection(
 					"jdbc:mysql://127.0.0.1/test",
