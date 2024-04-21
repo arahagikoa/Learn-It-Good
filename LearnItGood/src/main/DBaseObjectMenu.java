@@ -6,10 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
-public class BaseFieldMenu extends JMenuBar {
-	private BaseField basefield;
+public class DBaseObjectMenu extends JMenuBar {
+	private DBaseObject basefield;
 	
-	public BaseFieldMenu(BaseField Panel) {
+	public DBaseObjectMenu(DBaseObject Panel) {
 		this.basefield = Panel;
         JMenu menu = new JMenu("\\/");
         this.add(menu);
@@ -23,7 +23,7 @@ public class BaseFieldMenu extends JMenuBar {
         	@Override 
         	public void actionPerformed(ActionEvent e) {
         		String name = Panel.docTitle.getText();
-        		SwingUtilities.getWindowAncestor(BaseFieldMenu.this).dispose();
+        		SwingUtilities.getWindowAncestor(DBaseObjectMenu.this).dispose();
 
                 // Show the main menu frame
                 MainMenu.showBaseFrame(name);

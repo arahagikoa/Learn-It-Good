@@ -37,12 +37,12 @@ public class BazaWiedzyFrame extends JPanel {
         
         
         addBase.addActionListener(new ActionListener() {
-        	BaseField field;
+        	DBaseObject field;
         	@Override 
         	public void actionPerformed(ActionEvent e) {
         		String name = JOptionPane.showInputDialog("Podaj nazwę dla nowej bazy");
         		if (name != null && !name.isEmpty()) {
-        			field = new BaseField(BazaWiedzyFrame.this, name);
+        			field = new DBaseObject(BazaWiedzyFrame.this, name);
                     centPanel.add(field);
             		centPanel.revalidate(); 
                     centPanel.repaint();

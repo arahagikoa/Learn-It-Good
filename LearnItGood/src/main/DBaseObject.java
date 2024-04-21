@@ -5,18 +5,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class BaseField extends JPanel {
+public class DBaseObject extends JPanel {
 	JLabel docTitle;
 	JButton options;
 	JPanel list;
-	public BaseField(BazaWiedzyFrame frame, String Name) {
+	public DBaseObject(BazaWiedzyFrame frame, String Name) {
 		this.setBackground(Color.GRAY);
 		JPanel panel = new JPanel(new BorderLayout());
 
 		panel.setPreferredSize(new Dimension(480, 50)); 
 		
 		panel.setBackground(Color.white);
-		BaseFieldMenu menu = new BaseFieldMenu(this);	
+		DBaseObjectMenu menu = new DBaseObjectMenu(this);	
 		docTitle = new JLabel(Name);
 		docTitle.setText(Name);
 		
