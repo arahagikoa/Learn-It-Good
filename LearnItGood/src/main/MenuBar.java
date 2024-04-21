@@ -9,7 +9,11 @@ public class MenuBar extends JMenuBar {
     public Color czatbackgroundColor;
     public Color filesbackgroundColor;
     private MainPanel mainPanel;
-
+    private int user;
+    
+    public int addNumber(int a, int b) {
+    	return a + b;
+    }
     public MenuBar(MainPanel Panel) {
         this.mainPanel = Panel;
         JMenu menu = new JMenu("MENU");
