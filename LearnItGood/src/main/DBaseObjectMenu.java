@@ -3,17 +3,20 @@ package main;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.swing.*;
 
 
 public class DBaseObjectMenu extends JMenuBar {
 	private DBaseObject basefield;
 	
-	public DBaseObjectMenu(DBaseObject Panel) {
+	public DBaseObjectMenu(DBaseObject Panel, BazaWiedzyFrame frame) {
 		this.basefield = Panel;
         JMenu menu = new JMenu("\\/");
         this.add(menu);
-        
+        JDBCconn cmds = new JDBCconn();
         JMenuItem uzyj = new JMenuItem("Użyj");
         JMenuItem usun = new JMenuItem("Usuń");
         JMenuItem zmien = new JMenuItem("Zmień nazwę");
@@ -37,9 +40,21 @@ public class DBaseObjectMenu extends JMenuBar {
         	public void actionPerformed(ActionEvent e) {
         		Container parent = basefield.getParent();
                 if (parent instanceof JPanel) {
-                    ((JPanel) parent).remove(basefield);
-                    parent.revalidate();
-                    parent.repaint();
+                	DataBaseManager mng = DataBaseManager.getInstance();
+    		        String storageName = basefield.docTitle.getText();
+    		        try (Connection conn = mng.getConnection();) {
+    		            cmds.deleteTable(conn, storageName);
+    		            cmds.deleteRow(conn, storageName);
+    		            
+    		            
+    		            ((JPanel) parent).remove(basefield);
+    	                ((JPanel) parent).revalidate();
+    	                ((JPanel) parent).repaint();
+    		            
+    		            
+    		        } catch (SQLException e1) {
+    		            e1.printStackTrace();
+    		        }
                 }
         	}
         	
@@ -49,9 +64,25 @@ public class DBaseObjectMenu extends JMenuBar {
         	
         	@Override 
         	public void actionPerformed(ActionEvent e) {
-        		String newName = JOptionPane.showInputDialog("Podaj nową nazwę dla tej bazy");
-        		if (newName != null || newName != "") {
-        			Panel.docTitle.setText(newName);
+        		String name = JOptionPane.showInputDialog("Podaj nową nazwę dla tej bazy");
+        		String oldStorageName = basefield.docTitle.getText();
+        		if (name != null || name != "") {
+        			DataBaseManager mng = DataBaseManager.getInstance();
+        			try (Connection conn = mng.getConnection();) {
+    		            
+    		            String tableName = name.replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9_]", "");
+            			
+    		            cmds.changeTableName(conn, oldStorageName, tableName);
+    		            cmds.changeStorageName(conn, tableName, oldStorageName);
+    		            
+    		            basefield.docTitle.setText(tableName);
+    	                ((JPanel) basefield.getParent()).revalidate();
+    	                ((JPanel) basefield.getParent()).repaint();
+    		            
+    		        } catch (SQLException e1) {
+    		            e1.printStackTrace();
+    		        }
+        			
         		}
         		
         		

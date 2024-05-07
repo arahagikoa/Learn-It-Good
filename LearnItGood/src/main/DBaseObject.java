@@ -16,7 +16,7 @@ public class DBaseObject extends JPanel {
 		panel.setPreferredSize(new Dimension(480, 50)); 
 		
 		panel.setBackground(Color.white);
-		DBaseObjectMenu menu = new DBaseObjectMenu(this);	
+		DBaseObjectMenu menu = new DBaseObjectMenu(this, frame);	
 		docTitle = new JLabel(Name);
 		docTitle.setText(Name);
 		
