@@ -12,6 +12,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/DEV/okhttp-5.0.0-alpha.14.jar"/>
+=======
+	<classpathentry kind="lib" path="E:/javalibraries/okhttp-5.0.0-alpha.14.jar"/>
+>>>>>>> branch 'master' of https://github.com/arahagikoa/Learn-It-Good
 	<classpathentry kind="output" path="bin"/>
 </classpath>

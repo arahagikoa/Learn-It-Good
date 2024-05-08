@@ -22,7 +22,7 @@ public class JDBCconn {
     
 	
 	// ok
-	void changeTableName(Connection conn, String oldTableName, String newTableName) {
+	public void changeTableName(Connection conn, String oldTableName, String newTableName) {
 	    try {
 	        
 	        String alterTableSQL = "ALTER TABLE " + oldTableName + " RENAME TO " + newTableName;
@@ -69,7 +69,7 @@ public class JDBCconn {
 	
 	
 	// ok 
-	void createTable(Connection conn, String tableName) {
+	public void createTable(Connection conn, String tableName) {
 	    try {
 	        String createTableSQL = "CREATE TABLE " + tableName+ " ("
 	                                + "file_data_id INT AUTO_INCREMENT PRIMARY KEY, "
@@ -95,7 +95,7 @@ public class JDBCconn {
 	
 	
 	
-	void addNewDataFile(Connection conn, String tableName, String dataName, String dataContent) {
+	public void addNewDataFile(Connection conn, String tableName, String dataName, String dataContent) {
 	    try {
 	        
 	        String insertElementSQL = "INSERT INTO " + tableName + " (file_data_name, file_content) VALUES (?, ?)";
@@ -120,9 +120,12 @@ public class JDBCconn {
 	        e.printStackTrace();
 	    }
 	}
-	void changeDataFileName(Connection conn, String tableName, String newDataName, String oldFileName) {
+	public void changeDataFileName(Connection conn, String tableName, String newDataName, String oldFileName) {
 	    try {
-	        
+	    	int maxLength = 20; 
+	        if (newDataName.length() > maxLength) {
+	            newDataName = newDataName.substring(0, maxLength);
+	        }
 	        String updateFileNameSQL = "UPDATE " + tableName + " SET file_data_name = ? WHERE file_data_name = ?";
 	        
 	        
@@ -149,7 +152,7 @@ public class JDBCconn {
 	        e.printStackTrace();
 	    }
 	}
-	void deleteDataFile(Connection conn, String tableName, String fileName) {
+	public void deleteDataFile(Connection conn, String tableName, String fileName) {
 	    try {
 	        
 	        String deleteElementSQL = "DELETE FROM " + tableName + " WHERE file_data_name = ?";
