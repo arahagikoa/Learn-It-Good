@@ -22,7 +22,7 @@ class MainMenuTest {
     private static final String USER = "root";
     private static final String PASSWORD = "Fc(UQVJZa4";
     private static Connection conn;
-
+    private static String ma = "ASADADA";
     @BeforeAll
     static void setUp() {
         try {
