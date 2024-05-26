@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,13 +15,20 @@ public class ChatWindow extends JPanel {
     private DefaultListModel<String> chatModel = new DefaultListModel<>();
     private JList<String> chatHistory = new JList<>(chatModel);
     private JTextField inputField = new JTextField(35);
-
-    public ChatWindow() {
+    private RequestsMNG rmng = new RequestsMNG();
+    public ChatWindow(MainPanel mainPanel) {
+    	
+  
+    	
+    	
         JPanel panel = new JPanel(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(chatHistory);
+        
         panel.add(scrollPane, BorderLayout.CENTER);
+        
         JPanel bottomPanel = new JPanel(new FlowLayout());
         JButton save = new JButton("Save");
+        
         bottomPanel.add(save);
         bottomPanel.add(inputField);
         
@@ -27,17 +36,43 @@ public class ChatWindow extends JPanel {
         
         //panel.add(inputField, BorderLayout.SOUTH);
         add(panel);
+        
         panel.setPreferredSize(new Dimension(500, 700));
+        
         scrollPane.setMinimumSize(new Dimension(500, 700));
         //pack(); to działa tylko na JFrame
         //Obsługua wprowadzania tekstu 
         inputField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String message = inputField.getText();
-                chatModel.addElement("You: " + message);
-                chatModel.addElement("AI:" + " Miło że piszesz. Niedługo będę w stanie odpowiadać na twoje zapytania :) ");
-                inputField.setText("");
+            	JDBCconn cmds = new JDBCconn();
+            	DataBaseManager mng = DataBaseManager.getInstance();
+            	String tableName = mainPanel.getTitleName();
+		        String message = inputField.getText();
+		        chatModel.addElement("You: " + message);
+		        try (Connection conn = mng.getConnection();) {
+		        	
+		        	
+		            String content = cmds.getFilesContent(conn, tableName);
+		            
+		            String response_message = rmng.sendMessage(content);
+		            
+		            chatModel.addElement("AI:" + response_message);
+		            
+		            inputField.setText("");
+		           
+		            
+		            
+		            
+		            
+		        } catch (SQLException | IOException e1) {
+		            e1.printStackTrace();
+		            JOptionPane.showMessageDialog(panel, "Error during request processing: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		            
+		        }
+            	
+            	
+               
             }
         });
 

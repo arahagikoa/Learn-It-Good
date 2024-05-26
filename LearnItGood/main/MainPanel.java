@@ -18,7 +18,7 @@ public class MainPanel extends JFrame {
 
         MenuBar bar = new MenuBar(this);
         files = new FilePanel(this); // Zmiana tutaj
-        chat = new ChatWindow(); // Zmiana tutaj
+        chat = new ChatWindow(this); // Zmiana tutaj
         
         JPanel panel = new JPanel(new GridLayout(1, 2));
         panel.add(files);

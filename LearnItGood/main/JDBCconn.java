@@ -17,7 +17,8 @@ public class JDBCconn {
     private static final String SELECT_ALL_SQL = "SELECT * FROM storages";
     private static final String DELETE_ROW = "DELETE FROM storages WHERE storage_name = ?";
     private static final String CHANGE_NAME = "UPDATE storages SET storage_name = ? WHERE storage_name = ?";
-
+    private static final String GET_ALL_CONTENT_TEMPLATE = "SELECT file_content FROM %s";
+    private static String content;
     
     
 	
@@ -267,8 +268,30 @@ public class JDBCconn {
 	    }
 	}
 	
-	
-	
+	public String getFilesContent(Connection conn, String tableName) {
+	    content = "";
+
+	    try {
+	        
+	        String query = String.format(GET_ALL_CONTENT_TEMPLATE, tableName);
+	        PreparedStatement prepStatement = conn.prepareStatement(query);
+	        
+	        ResultSet resultSet = prepStatement.executeQuery();
+	        
+	        while (resultSet.next()) {
+	            
+	            content += resultSet.getString("file_content") + "\n" + "   ";
+	        }
+	        
+	        resultSet.close();
+	        prepStatement.close();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return content;
+	}
 	
 	
 	
