@@ -8,8 +8,10 @@ public class MainPanel extends JFrame {
     private FilePanel files;
     private ChatWindow chat;
     private String titleName;
+    private String jezyk;
     
     public MainPanel(String name) {
+    	jezyk = "Polski";
     	this.titleName = name;
         this.setTitle(name);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -41,7 +43,9 @@ public class MainPanel extends JFrame {
         files.setBackgroundColor(filesbackgroundColor); // Zmiana tutaj
     }
    
-
+    public void changeJezyk(String nowy_jezyk) {
+    	jezyk = nowy_jezyk;
+    }
     public static void main(String[] args) {
         MainPanel mainPanel = new MainPanel("Learn it good");
         mainPanel.setVisible(true);

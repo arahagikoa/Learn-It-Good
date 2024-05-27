@@ -20,7 +20,6 @@ public class ChatWindow extends JPanel {
     	
   
     	
-    	
         JPanel panel = new JPanel(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane(chatHistory);
         

@@ -38,14 +38,49 @@ public class MenuBar extends JMenuBar {
         menu.add(autor);
         
         
-        
+        jezyk.addActionListener(new ActionListener() {
+        	
+        	@Override 
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		String[] jezyki =
+        			{
+        			"Polski",
+        			"Angielski"
+        			};
+        		
+        		int opcja = JOptionPane.showOptionDialog(
+        				null,
+        				"Wybierz język",
+        				"Zmiana języka w aplikacji",
+        				0,
+        				0,
+        				null,
+        				jezyki,
+        				""
+        				);
+
+        		
+        		switch(opcja)
+        		{
+        		case 0:
+	        		mainPanel.changeJezyk("Polski");
+	        		break;
+        		case 1:
+	        		mainPanel.changeJezyk("Angielski");
+	        		break;
+        		}
+        	}
+        	
+        	
+        });
         powrot.addActionListener(new ActionListener() {
         	
         	@Override 
         	public void actionPerformed(ActionEvent e) {
         		SwingUtilities.getWindowAncestor(MenuBar.this).dispose();
 
-                // Show the main menu frame
+                
                 MainMenu.showMainMenu();
         	}
         	
