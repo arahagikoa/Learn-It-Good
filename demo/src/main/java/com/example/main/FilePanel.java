@@ -17,23 +17,28 @@ public class FilePanel extends JPanel {
     private JPanel fileContainer;
     private JButton addButton;
     MainPanel mainPanel;
+    public Color col = Color.WHITE;
     public StringBuilder text;
     public ChatWindow chatWindow;
     public FileObject fileObj;
-
+    public JScrollPane scrollPane;
     public FilePanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
         setLayout(new BorderLayout());
+        
+        
         this.chatWindow = new ChatWindow(mainPanel, fileObj);
         fileContainer = new JPanel();
         fileContainer.setLayout(new BoxLayout(fileContainer, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(fileContainer);
+        fileContainer.setBackground(Color.black);
+        scrollPane = new JScrollPane(fileContainer);
+        scrollPane.setBackground(Color.black);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     
         SwingUtilities.invokeLater(() -> {
             DataBaseManager mng = DataBaseManager.getInstance();
             try (Connection conn = mng.getConnection()) {
-                getAllFilesAndGenerate(conn, fileContainer);
+                getAllFilesAndGenerate(conn, fileContainer, col);
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -94,7 +99,7 @@ public class FilePanel extends JPanel {
             try (Connection conn = mng.getConnection()) {
                 JDBCconn cmds = new JDBCconn();
                 cmds.addNewDataFile(conn, storageName, fileName, text.toString());
-                getAllFilesAndGenerate(conn, fileContainer);
+                getAllFilesAndGenerate(conn, fileContainer, col);
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
@@ -105,7 +110,7 @@ public class FilePanel extends JPanel {
     }
     
 
-    void getAllFilesAndGenerate(Connection conn, JPanel panel) {
+    void getAllFilesAndGenerate(Connection conn, JPanel panel, Color color) {
         try {
             String SELECT_ALL_SQL = "SELECT file_data_name FROM " + mainPanel.getTitle();
             PreparedStatement prepStatement = conn.prepareStatement(SELECT_ALL_SQL);
@@ -118,6 +123,7 @@ public class FilePanel extends JPanel {
 
                 SwingUtilities.invokeLater(() -> {
                     FileObject field = new FileObject(this, fileName, chatWindow);
+                    field.changebcgColor(color);
                     panel.add(field);
                     panel.revalidate();
                     panel.repaint();
@@ -134,5 +140,15 @@ public class FilePanel extends JPanel {
 
     public void setBackgroundColor(Color color) {
         this.setBackground(color);
+        fileContainer.setBackground(color);
+        scrollPane.setBackground(color);
+        SwingUtilities.invokeLater(() -> {
+            DataBaseManager mng = DataBaseManager.getInstance();
+            try (Connection conn = mng.getConnection()) {
+                getAllFilesAndGenerate(conn, fileContainer, color);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 }

@@ -46,6 +46,9 @@ public class FileObject extends JPanel {
     public void call(String file_content) {
         create_prompt(file_content, window);
     }
+    public void changebcgColor (Color color) {
+    	this.setBackground(color);
+    }
 
     private String create_prompt(String file_text, ChatWindow window){
         StringBuilder prompt_Builder = new StringBuilder();
